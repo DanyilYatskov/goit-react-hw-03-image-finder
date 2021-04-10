@@ -13,12 +13,13 @@ class App extends Component {
   };
 
   renderGallery = ({ query }) => {
-    console.log(query);
     fetchAPI.tag = query;
     fetchAPI
       .fetchImages()
       .then(hits => {
-        //console.log(hits);
+        if (hits.length === 0) {
+          return;
+        }
         this.setState(prevState => ({
           gallery: [...prevState.gallery, ...hits],
         }));
