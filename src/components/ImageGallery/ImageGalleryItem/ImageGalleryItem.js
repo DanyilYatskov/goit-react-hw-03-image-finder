@@ -2,32 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './imageGalleryItem.module.scss';
 
-const ImageGalleryItem = ({ gallery, handleOnImageClick }) => {
+const ImageGalleryItem = ({ image, handleOnImageClick }) => {
   return (
-    <li className={styles.ImageGalleryItem}>
+    <li className={styles.item}>
       <img
-        src={gallery.webformatURL}
-        alt={gallery.tags}
+        src={image.webformatURL}
+        alt={image.tags}
         className={styles.image}
-        data-source={gallery.largeImageURL}
+        data-source={image.largeImageURL}
         onClick={handleOnImageClick}
       />
       <div className={styles.stats}>
         <p>
-          <i class="material-icons">thumb_up</i>
-          {gallery.likes}
+          <i className="material-icons">thumb_up</i>
+          {image.likes}
         </p>
         <p>
-          <i class="material-icons">visibility</i>
-          {gallery.views}
+          <i className="material-icons">visibility</i>
+          {image.views}
         </p>
         <p>
-          <i class="material-icons">comment</i>
-          {gallery.comments}
+          <i className="material-icons">comment</i>
+          {image.comments}
         </p>
         <p>
-          <i class="material-icons">cloud_download</i>
-          {gallery.downloads}
+          <i className="material-icons">cloud_download</i>
+          {image.downloads}
         </p>
       </div>
     </li>
@@ -41,6 +41,6 @@ ImageGalleryItem.defaultProps = {
 };
 
 ImageGalleryItem.propTypes = {
-  gallery: PropTypes.array.isRequired,
+  image: PropTypes.object.isRequired,
   handleOnImageClick: PropTypes.func,
 };
