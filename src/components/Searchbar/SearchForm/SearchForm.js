@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 //import PropTypes from 'prop-types';
+//import fetchAPI from '../../../API/fetchAPI';
 import styles from './searchForm.module.scss';
 
 class SearchForm extends Component {
   state = {
     query: '',
   };
+
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({ [name.toLowerCase()]: value });
@@ -16,6 +18,7 @@ class SearchForm extends Component {
     this.props.onShowGalleryByQuery(this.state);
     this.setState({ query: '' });
   };
+
   render() {
     const { query } = this.state;
     return (

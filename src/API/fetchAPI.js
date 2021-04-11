@@ -31,13 +31,14 @@ const fetchAPI = {
           notice(
             alert,
             'No matches found',
-            'There is No images with such tag please try again',
+            'There is no images with such tag please try again',
           );
           return;
         }
         // if (response.total > 12) {
         //   refs.moreImagesBtnRef.classList.remove('is-hidden');
         // }
+        console.log(response);
         this.page += 1;
         return response.hits;
       });
