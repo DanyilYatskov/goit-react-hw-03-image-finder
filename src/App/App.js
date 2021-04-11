@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar/';
 import ImageGallery from '../components/ImageGallery';
 import Notification from '../components/Notification';
 import LoadMoreBtn from '../components/Button';
+import Loader from '../components/Loader';
 import styles from './app.module.scss';
 
 class App extends Component {
@@ -34,10 +35,12 @@ class App extends Component {
       searchQuery: query,
       gallery: [],
       showPaginationBtn: false,
+      showLoader: false,
     });
   };
 
   renderGallery = () => {
+    this.setState({ showPaginationBtn: false, showLoader: true });
     const { searchQuery } = this.state;
     fetchAPI.tag = searchQuery;
     fetchAPI
@@ -55,7 +58,8 @@ class App extends Component {
 
         this.windowScrollTo();
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
+      .finally(() => this.setState({ showLoader: false }));
   };
 
   changeModalState = () => {
@@ -64,22 +68,18 @@ class App extends Component {
     }));
   };
 
-  // togglePaginationBtn = () => {
-  //   this.setState(({ showPaginationBtn }) => ({
-  //     showGalshowPaginationBtnlery: !showPaginationBtn,
-  //   }));
-  // };
-
   render() {
-    const { modalVisible, gallery, showPaginationBtn } = this.state;
+    const { modalVisible, gallery, showPaginationBtn, showLoader } = this.state;
     return (
       <div className={styles.App}>
         <SearchBar onShowGalleryByQuery={this.onNewSearch} />
+
         {gallery.length > 0 ? (
           <ImageGallery gallery={gallery} />
         ) : (
           <Notification message="No images to show, Pls enter correct image query" />
         )}
+        {showLoader && <Loader />}
         {showPaginationBtn && (
           <LoadMoreBtn
             name="Load More"
