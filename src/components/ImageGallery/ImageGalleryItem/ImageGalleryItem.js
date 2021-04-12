@@ -4,13 +4,12 @@ import styles from './imageGalleryItem.module.scss';
 
 const ImageGalleryItem = ({ image, handleOnImageClick }) => {
   return (
-    <li className={styles.item}>
+    <li className={styles.item} onClick={event => handleOnImageClick(event)}>
       <img
         src={image.webformatURL}
         alt={image.tags}
         className={styles.image}
         data-source={image.largeImageURL}
-        onClick={handleOnImageClick}
       />
       <div className={styles.stats}>
         <p>

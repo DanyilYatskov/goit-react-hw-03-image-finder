@@ -14,6 +14,7 @@ class App extends Component {
     searchQuery: '',
     modalVisible: false,
     showPaginationBtn: false,
+    bodyOverflow: 'scroll',
   };
 
   windowScrollTo = () => {
@@ -27,6 +28,7 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.renderGallery();
     }
+    document.body.style.overflow = this.state.bodyOverflow;
   }
 
   onNewSearch = ({ query }) => {
@@ -36,6 +38,7 @@ class App extends Component {
       gallery: [],
       showPaginationBtn: false,
       showLoader: false,
+      currentBigPicture: '',
     });
   };
 
@@ -63,19 +66,37 @@ class App extends Component {
   };
 
   changeModalState = () => {
-    this.setState(({ modalVisible }) => ({
+    this.setState(({ modalVisible, bodyOverflow }) => ({
       modalVisible: !modalVisible,
+      bodyOverflow: bodyOverflow === 'hidden' ? 'scroll' : 'hidden',
     }));
   };
 
+  imageClickHandler = event => {
+    if (event.target.nodeName !== 'IMG') {
+      return;
+    }
+    this.setState({ currentBigPicture: event.target.dataset.source });
+    this.changeModalState();
+  };
+
   render() {
-    const { modalVisible, gallery, showPaginationBtn, showLoader } = this.state;
+    const {
+      modalVisible,
+      gallery,
+      showPaginationBtn,
+      showLoader,
+      currentBigPicture,
+    } = this.state;
     return (
       <div className={styles.App}>
         <SearchBar onShowGalleryByQuery={this.onNewSearch} />
 
         {gallery.length > 0 ? (
-          <ImageGallery gallery={gallery} />
+          <ImageGallery
+            gallery={gallery}
+            handleOnImageClick={this.imageClickHandler}
+          />
         ) : (
           <Notification message="No images to show, Pls enter correct image query" />
         )}
@@ -87,7 +108,11 @@ class App extends Component {
             handleOnClick={this.renderGallery}
           />
         )}
-        {modalVisible && <Modal onClose={this.changeModalState}></Modal>}
+        {modalVisible && (
+          <Modal onClose={this.changeModalState}>
+            <img src={currentBigPicture} alt="hello" />
+          </Modal>
+        )}
       </div>
     );
   }

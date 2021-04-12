@@ -18,6 +18,7 @@ const fetchAPI = {
   searchTag: '',
   page: 1,
   itemsOnPage: 12,
+
   fetchImages() {
     const url = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${this.searchTag}&page=${this.page}&per_page=${this.itemsOnPage}&key=${myKey}`;
     return fetch(url)
@@ -38,17 +39,20 @@ const fetchAPI = {
         // if (response.total > 12) {
         //   refs.moreImagesBtnRef.classList.remove('is-hidden');
         // }
-        console.log(response);
+        // console.log(response);
         this.page += 1;
         return response.hits;
       });
   },
+
   resetPageToFirst() {
     this.page = 1;
   },
+
   get tag() {
     return this.searchTag;
   },
+
   set tag(value) {
     this.searchTag = value;
   },
