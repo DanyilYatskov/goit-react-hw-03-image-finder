@@ -36,10 +36,6 @@ const fetchAPI = {
           );
           return;
         }
-        // if (response.total > 12) {
-        //   refs.moreImagesBtnRef.classList.remove('is-hidden');
-        // }
-        // console.log(response);
         this.page += 1;
         return response.hits;
       });
